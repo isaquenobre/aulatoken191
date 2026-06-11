@@ -20,13 +20,43 @@ public class JWTCreator {
   public static String create(String prefix, String key, JWTObject jwtObject) {// método para criar o token, recebe o
                                                                                // prefixo, a chave de assinatura e o
                                                                                // objeto JWTObject
-    String token = Jwts.builder().setSubject(jwtObject.getSubject()).setIssuedAt(jwtObject.getIssuedAt())
-        .setExpiration(jwtObject.getExpiration())
-        .claim(ROLES_AUTHORITIES, checkRoles(jwtObject.getRoles())).signWith(SignatureAlgorithm.HS512, key).compact();
-    return prefix + " " + token;
+    String token = Jwts.builder().setSubject(jwtObject.getSubject()).setIssuedAt(jwtObject.getIssuedAt())// o token é
+                                                                                                         // criado com
+                                                                                                         // as
+                                                                                                         // informações
+                                                                                                         // do objeto
+                                                                                                         // JWTObject, a
+                                                                                                         // data de
+                                                                                                         // emissão e a
+                                                                                                         // data de
+                                                                                                         // expiração
+        .setExpiration(jwtObject.getExpiration())// o token é criado com as informações do objeto JWTObject, a data de
+                                                 // emissão e a data de expiração
+        .claim(ROLES_AUTHORITIES, checkRoles(jwtObject.getRoles())).signWith(SignatureAlgorithm.HS512, key).compact();// o
+                                                                                                                      // token
+                                                                                                                      // é
+                                                                                                                      // criado
+                                                                                                                      // com
+                                                                                                                      // as
+                                                                                                                      // informações
+                                                                                                                      // do
+                                                                                                                      // objeto
+                                                                                                                      // JWTObject,
+                                                                                                                      // a
+                                                                                                                      // chave
+                                                                                                                      // de
+                                                                                                                      // assinatura
+                                                                                                                      // e
+                                                                                                                      // o
+                                                                                                                      // algoritmo
+                                                                                                                      // de
+                                                                                                                      // assinatura
+    return prefix + " " + token;// o token é retornado com o prefixo, ex: Bearer + " " + token
   }
 
-  public static JWTObject create(String token, String prefix, String key)
+  public static JWTObject create(String token, String prefix, String key)// método para criar o objeto JWTObject a
+                                                                         // partir do token, recebe o token, o prefixo e
+                                                                         // a chave de assinatura
       throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException {
     JWTObject object = new JWTObject();
     token = token.replace(prefix, "");
